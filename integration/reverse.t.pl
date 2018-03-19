@@ -114,8 +114,8 @@ sub encfsctl_cat_test
     ok(open(OUT, "> $plain/hello.txt"), "create file for encfsctl cat test");
     print OUT $contents;
     close OUT;
-    qx(ENCFS6_CONFIG=$plain/.encfs6.xml ./build/encfsctl cat --extpass="echo test" $ciphertext hello.txt > $plain/hellodec.txt);
-    qx(ENCFS6_CONFIG=$plain/.encfs6.xml ./build/encfsctl cat --extpass="echo test" --reverse $plain hello.txt > $plain/helloenc.txt);
+    qx(ENCFS6_CONFIG=$plain/.encfs6.xml catchsegv ./build/encfsctl cat --extpass="echo test" $ciphertext hello.txt > $plain/hellodec.txt);
+    qx(ENCFS6_CONFIG=$plain/.encfs6.xml catchsegv ./build/encfsctl cat --extpass="echo test" --reverse $plain hello.txt > $plain/helloenc.txt);
     my $cname = encName("hello.txt");
     ok(system("diff -q $plain/helloenc.txt $ciphertext/$cname")==0, "encfsctl correctly encrypts");
     ok(system("diff -q $plain/hello.txt $plain/hellodec.txt")==0, "encfsctl correctly decrypts");
